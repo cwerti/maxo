@@ -16,9 +16,9 @@ def _format_url(
     return url
 
 
-def create_tg_link(link: str, **kwargs: Any) -> str:
+def create_max_link(link: str, **kwargs: Any) -> str:
     return _format_url(f"max://{link}", **kwargs)
 
 
-def create_telegram_link(*path: str, **kwargs: Any) -> str:
+def create_max_http_link(*path: str, **kwargs: Any) -> str:
     return _format_url("https://max.ru", *path, **kwargs)

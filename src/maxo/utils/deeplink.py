@@ -1,8 +1,8 @@
 __all__ = (
     "create_deep_link",
+    "create_max_http_link",
     "create_start_link",
     "create_startapp_link",
-    "create_telegram_link",
     "decode_payload",
     "encode_payload",
 )
@@ -11,7 +11,7 @@ import re
 from collections.abc import Callable
 from typing import TYPE_CHECKING, Literal, cast
 
-from maxo.utils.link import create_telegram_link
+from maxo.utils.link import create_max_http_link
 from maxo.utils.payload import decode_payload, encode_payload
 
 if TYPE_CHECKING:
@@ -78,9 +78,9 @@ def create_deep_link(
         raise ValueError(f"Payload must be up to {PAYLOAD_MAX_LEN} characters long.")
 
     if not app_name:
-        deep_link = create_telegram_link(username, **{cast(str, link_type): payload})
+        deep_link = create_max_http_link(username, **{cast(str, link_type): payload})
     else:
-        deep_link = create_telegram_link(
+        deep_link = create_max_http_link(
             username,
             app_name,
             **{cast(str, link_type): payload},
