@@ -2,7 +2,7 @@
 
 from .always import AlwaysFalseFilter, AlwaysTrueFilter
 from .base import BaseFilter
-from .command import Command, CommandStart
+from .command import Command, CommandObject, CommandStart
 from .deeplink import DeeplinkFilter
 from .exception import ExceptionMessageFilter, ExceptionTypeFilter
 from .logic import AndFilter, InvertFilter, OrFilter, and_f, invert_f, or_f
@@ -14,6 +14,7 @@ __all__ = (
     "AndFilter",
     "BaseFilter",
     "Command",
+    "CommandObject",
     "CommandStart",
     "DeeplinkFilter",
     "ExceptionMessageFilter",

@@ -1,22 +1,41 @@
 import re
 from collections.abc import Iterable, Sequence
-from dataclasses import replace
-from re import Pattern
-from typing import (
-    cast,
-)
+from dataclasses import field, replace
+from re import Match, Pattern
+from typing import cast
 
 from maxo import Bot, Ctx
 from maxo.routing.filters import BaseFilter
 from maxo.routing.updates import MessageCreated
+from maxo.types.base import MaxoType
 from maxo.types.bot_command import BotCommand
-from maxo.types.command_object import CommandObject
 
 CommandPatternType = str | re.Pattern | BotCommand
 
 
 class CommandException(Exception):
     pass
+
+
+class CommandObject(MaxoType):
+    prefix: str = "/"
+    command: str = ""
+    mention: str | None = None
+    args: str | None = field(repr=False, default=None)
+    regexp_match: Match[str] | None = field(repr=False, default=None)
+
+    @property
+    def mentioned(self) -> bool:
+        return bool(self.mention)
+
+    @property
+    def text(self) -> str:
+        line = self.prefix + self.command
+        if self.mention:
+            line += "@" + self.mention
+        if self.args:
+            line += " " + self.args
+        return line
 
 
 class Command(BaseFilter[MessageCreated]):

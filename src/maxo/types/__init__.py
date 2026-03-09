@@ -23,7 +23,6 @@ from .chat_button import ChatButton
 from .chat_list import ChatList
 from .chat_member import ChatMember
 from .chat_members_list import ChatMembersList
-from .command_object import CommandObject
 from .contact_attachment import ContactAttachment
 from .contact_attachment_payload import ContactAttachmentPayload
 from .contact_attachment_request import ContactAttachmentRequest
@@ -114,7 +113,6 @@ __all__ = (
     "ChatList",
     "ChatMember",
     "ChatMembersList",
-    "CommandObject",
     "ContactAttachment",
     "ContactAttachmentPayload",
     "ContactAttachmentRequest",

@@ -1,6 +1,6 @@
 from unihttp.method import BaseMethod
 
-from maxo.types import MaxoType
+from maxo.types.base import MaxoType
 
 
 class MaxoMethod[MethodResultT](BaseMethod[MethodResultT], MaxoType):
