@@ -105,6 +105,10 @@ class Bot:
     def defaults(self) -> BotDefaults:
         return self._defaults
 
+    @property
+    def token(self) -> str:
+        return self._token
+
     async def start(self) -> None:
         if self.state.started:
             return

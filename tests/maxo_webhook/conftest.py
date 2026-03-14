@@ -1,7 +1,8 @@
 from ipaddress import IPv4Address
 
 import pytest
-from aiogram import Bot
+
+from maxo import Bot
 
 
 @pytest.fixture

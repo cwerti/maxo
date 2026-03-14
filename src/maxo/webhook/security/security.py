@@ -1,5 +1,4 @@
-from aiogram import Bot
-
+from maxo import Bot
 from maxo.webhook.adapters.base_adapter import BoundRequest
 from maxo.webhook.security.base_check import SecurityCheck
 from maxo.webhook.security.secret_token import SecretToken

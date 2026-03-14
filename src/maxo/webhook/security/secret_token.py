@@ -2,8 +2,7 @@ import re
 from abc import abstractmethod
 from hmac import compare_digest
 
-from aiogram import Bot
-
+from maxo import Bot
 from maxo.webhook.adapters.base_adapter import BoundRequest
 from maxo.webhook.security.base_check import SecurityCheck
 
