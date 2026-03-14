@@ -1,5 +1,3 @@
-# ruff: noqa: E501
-
 from typing import assert_never
 
 from maxo.types import (
@@ -46,10 +44,11 @@ def request_to_attachment(request: AttachmentsRequests) -> Attachments:
         ),
     ):
         raise TypeError(
-            f"Cannot convert {type(request).__name__} to an Attachment object directly. "
-            "Request objects lack server-generated data like IDs, URLs, or resolved user info. "
-            "This conversion is only possible for request types that have a 1:1 mapping of fields "
-            "(e.g., LocationAttachmentRequest, InlineKeyboardAttachmentRequest).",
+            f"Cannot convert {type(request).__name__} to an Attachment object "
+            "directly. Request objects lack server-generated data like IDs, "
+            "URLs, or resolved user info. This conversion is only possible for "
+            "request types that have a 1:1 mapping of fields (e.g., "
+            "LocationAttachmentRequest, InlineKeyboardAttachmentRequest).",
         )
 
     assert_never(request)

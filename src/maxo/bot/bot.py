@@ -4,11 +4,13 @@ from collections.abc import AsyncIterator, Callable
 from contextlib import asynccontextmanager
 from typing import Any, BinaryIO, Self, TypeVar
 
-from aiohttp import ClientSession
+from adaptix import Retort
 from unihttp.bind_method import bind_method
 from unihttp.middlewares import AsyncMiddleware
 
+from maxo import loggers
 from maxo.bot.api_client import MaxApiClient
+from maxo.bot.defaults import BotDefaults
 from maxo.bot.methods import (
     AddMembers,
     AnswerOnCallback,
@@ -51,7 +53,8 @@ from maxo.bot.state import (
     EmptyBotState,
     RunningBotState,
 )
-from maxo.enums.text_format import TextFormat
+from maxo.errors import MaxBotApiError
+from maxo.serialization import get_retort
 from maxo.types import AttachmentPayload, MaxoType
 
 _MethodResultT = TypeVar("_MethodResultT", bound=MaxoType)
@@ -59,12 +62,12 @@ _MethodResultT = TypeVar("_MethodResultT", bound=MaxoType)
 
 class Bot:
     __slots__ = (
+        "_defaults",
         "_json_dumps",
         "_json_loads",
         "_middleware",
-        "_session",
+        "_retort",
         "_state",
-        "_text_format",
         "_token",
         "_warming_up",
     )
@@ -72,20 +75,21 @@ class Bot:
     def __init__(
         self,
         token: str,
-        text_format: TextFormat | None = None,
+        *,
+        defaults: BotDefaults | None = None,
         warming_up: bool = True,
         middleware: list[AsyncMiddleware] | None = None,
-        session: ClientSession | None = None,
         json_dumps: Callable[[Any], str] = json.dumps,
         json_loads: Callable[[str | bytes | bytearray], Any] = json.loads,
     ) -> None:
+        self._defaults = defaults or BotDefaults()
         self._token = token
-        self._text_format = text_format
         self._warming_up = warming_up
         self._middleware = middleware
-        self._session = session
         self._json_dumps = json_dumps
         self._json_loads = json_loads
+
+        self._retort = get_retort(defaults=self._defaults, warming_up=warming_up)
 
         self._state = EmptyBotState()
 
@@ -93,16 +97,23 @@ class Bot:
     def state(self) -> BotState:
         return self._state
 
+    @property
+    def retort(self) -> Retort:
+        return self._retort
+
+    @property
+    def defaults(self) -> BotDefaults:
+        return self._defaults
+
     async def start(self) -> None:
         if self.state.started:
             return
 
         api_client = MaxApiClient(
             token=self._token,
-            warming_up=self._warming_up,
-            text_format=self._text_format,
+            request_dumper=self._retort,
+            response_loader=self._retort,
             middleware=self._middleware,
-            session=self._session,
             json_dumps=self._json_dumps,
             json_loads=self._json_loads,
         )
@@ -125,6 +136,16 @@ class Bot:
         method: MaxoMethod[_MethodResultT],
     ) -> _MethodResultT:
         return await self.state.api_client.call_method(method)
+
+    async def silent_call_method(self, method: MaxoMethod[_MethodResultT]) -> None:
+        try:
+            await self.call_method(method)
+        except MaxBotApiError as e:
+            # In due to WebHook mechanism doesn't allow getting response for
+            # requests called in answer to WebHook request.
+            # Need to skip unsuccessful responses.
+            # For debugging here is added logging.
+            loggers.bot.error("Failed to make answer: %s: %s", e.__class__.__name__, e)
 
     async def close(self) -> None:
         if self.state.closed or not self.state.started:

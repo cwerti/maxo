@@ -1,16 +1,19 @@
+import io
 import json
-from collections.abc import Callable
-from typing import Any, Never
+import pathlib
+from collections.abc import AsyncGenerator, Callable
+from typing import Any, BinaryIO, Never
 
 from aiohttp import ClientSession
+from anyio import open_file
 from unihttp.clients.aiohttp import AiohttpAsyncClient
 from unihttp.http import HTTPResponse
 from unihttp.method import BaseMethod
 from unihttp.middlewares import AsyncMiddleware
+from unihttp.serialize import RequestDumper, ResponseLoader
 
 from maxo import loggers
 from maxo.__meta__ import __version__
-from maxo.enums.text_format import TextFormat
 from maxo.errors import (
     MaxBotApiError,
     MaxBotBadRequestError,
@@ -22,15 +25,15 @@ from maxo.errors import (
     MaxBotUnauthorizedError,
     MaxBotUnknownServerError,
 )
-from maxo.serialization import get_retort
+from maxo.types import AttachmentPayload
 
 
 class MaxApiClient(AiohttpAsyncClient):
     def __init__(
         self,
         token: str,
-        warming_up: bool,
-        text_format: TextFormat | None = None,
+        request_dumper: RequestDumper,
+        response_loader: ResponseLoader,
         base_url: str = "https://platform-api.max.ru/",
         middleware: list[AsyncMiddleware] | None = None,
         session: ClientSession | None = None,
@@ -47,12 +50,10 @@ class MaxApiClient(AiohttpAsyncClient):
         if "User-Agent" not in session.headers:
             session.headers["User-Agent"] = f"maxo/{__version__}"
 
-        retort = get_retort(text_format=text_format, warming_up=warming_up)
-
         super().__init__(
             base_url=base_url,
-            request_dumper=retort,
-            response_loader=retort,
+            request_dumper=request_dumper,
+            response_loader=response_loader,
             middleware=middleware,
             session=session,
             json_dumps=json_dumps,

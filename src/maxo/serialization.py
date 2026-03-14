@@ -6,6 +6,7 @@ from unihttp.serializers.adaptix import DEFAULT_RETORT, for_marker
 
 from maxo._internal._adaptix.concat_provider import concat_provider
 from maxo._internal._adaptix.has_tag_provider import has_tag_provider
+from maxo.bot.defaults import BotDefaults
 from maxo.bot.warming_up import WarmingUpType, warming_up_retort
 from maxo.enums import (
     AttachmentRequestType,
@@ -132,7 +133,7 @@ _retort: Retort | None = None
 
 def get_retort(
     *,
-    text_format: TextFormat | None = None,
+    defaults: BotDefaults | None = None,
     warming_up: bool = True,
 ) -> Retort:
     global _retort
@@ -140,15 +141,18 @@ def get_retort(
     if _retort is not None:
         return _retort
 
-    _retort = create_retort(text_format=text_format, warming_up=warming_up)
+    _retort = create_retort(defaults=defaults, warming_up=warming_up)
     return _retort
 
 
 def create_retort(
     *,
-    text_format: TextFormat | None = None,
+    defaults: BotDefaults | None = None,
     warming_up: bool = True,
 ) -> Retort:
+    if defaults is None:
+        defaults = BotDefaults()
+
     retort = DEFAULT_RETORT.extend(
         recipe=[
             TAG_PROVIDERS,
@@ -169,7 +173,7 @@ def create_retort(
                 | P[TextFormat | None]
                 | P[Omittable[TextFormat]]
                 | P[Omittable[TextFormat | None]],
-                lambda item: item or text_format,
+                lambda item: item or defaults.text_format,
             ),
             dumper(
                 P[Attachments],
