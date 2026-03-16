@@ -39,6 +39,7 @@ class Dispatcher(Router):
         self.workflow_data = workflow_data or {}
         self.workflow_data["dispatcher"] = self
         self.workflow_data["router"] = self
+        self.workflow_data["dp"] = self
 
         self.update = self._observers[MaxoUpdate] = UpdateObserver[MaxoUpdate[Any]]()
         self.update.middleware.outer(ErrorMiddleware(self))

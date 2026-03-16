@@ -59,7 +59,6 @@ class WebhookEngine(ABC):
         """Build workflow data for startup/shutdown events."""
         return {
             "app": app,
-            "dispatcher": self.dispatcher,
             "webhook_engine": self,
             **self.dispatcher.workflow_data,
             **kwargs,
