@@ -36,6 +36,7 @@ from maxo.routing.updates import (
 )
 from maxo.types import (
     Attachments,
+    AttachmentsRequests,
     AudioAttachment,
     AudioAttachmentRequest,
     CallbackButton,
@@ -159,8 +160,8 @@ def create_retort(
                 lambda item: item or defaults.text_format,
             ),
             dumper(
-                P[Attachments],
-                lambda attachment: attachment.to_request(),
+                P[AttachmentsRequests | Attachments],
+                lambda x: x.to_request() if isinstance(x, Attachments) else x,
                 chain=Chain.FIRST,
             ),
             loader(P[datetime], lambda x: datetime.fromtimestamp(x / 1000, tz=UTC)),
