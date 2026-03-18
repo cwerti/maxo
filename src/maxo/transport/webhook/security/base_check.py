@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from typing import Any
 
 from maxo import Bot
-from maxo.webhook.adapters.base_adapter import BoundRequest
+from maxo.transport.webhook.adapters.base_adapter import BoundRequest
 
 
 class SecurityCheck(ABC):

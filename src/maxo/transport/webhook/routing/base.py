@@ -4,7 +4,7 @@ from typing import Any
 from yarl import URL
 
 from maxo import Bot
-from maxo.webhook.adapters.base_adapter import BoundRequest
+from maxo.transport.webhook.adapters.base_adapter import BoundRequest
 
 
 class BaseRouting(ABC):

@@ -3,9 +3,9 @@ import os
 
 from maxo import Bot, Dispatcher
 from maxo.routing.updates import MessageCreated
+from maxo.transport.long_polling import LongPolling
 from maxo.types import UpdateContext
 from maxo.utils.facades import MessageCreatedFacade
-from maxo.utils.long_polling import LongPolling
 from maxo.utils.upload_media import FSInputFile
 
 dp = Dispatcher()

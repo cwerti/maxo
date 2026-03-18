@@ -8,12 +8,12 @@ from aiohttp import ContentTypeError
 from aiohttp.web import Application, Request
 from aiohttp.web_response import Response, json_response
 
-from maxo.webhook.adapters.aiohttp.mapping import (
+from maxo.transport.webhook.adapters.aiohttp.mapping import (
     AiohttpHeadersMapping,
     AiohttpQueryMapping,
 )
-from maxo.webhook.adapters.base_adapter import BoundRequest, WebAdapter
-from maxo.webhook.adapters.base_mapping import MappingABC
+from maxo.transport.webhook.adapters.base_adapter import BoundRequest, WebAdapter
+from maxo.transport.webhook.adapters.base_mapping import MappingABC
 
 
 class AiohttpBoundRequest(BoundRequest[Request]):

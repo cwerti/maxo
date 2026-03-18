@@ -2,7 +2,7 @@ from typing import Any
 
 from multidict import CIMultiDictProxy, MultiMapping
 
-from maxo.webhook.adapters.base_mapping import MappingABC
+from maxo.transport.webhook.adapters.base_mapping import MappingABC
 
 
 class AiohttpHeadersMapping(MappingABC[CIMultiDictProxy[str]]):

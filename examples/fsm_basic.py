@@ -10,10 +10,10 @@ from maxo.fsm import FSMContext, State, StateFilter, StatesGroup
 from maxo.integrations.magic_filter import MagicFilter
 from maxo.routing.filters import AndFilter, CommandStart
 from maxo.routing.updates import MessageCreated
+from maxo.transport.long_polling import LongPolling
 from maxo.types import MessageButton
 from maxo.utils.builders import KeyboardBuilder
 from maxo.utils.facades import MessageCreatedFacade
-from maxo.utils.long_polling import LongPolling
 
 logger = logging.getLogger(__name__)
 

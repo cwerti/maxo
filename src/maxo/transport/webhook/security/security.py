@@ -1,9 +1,9 @@
 from typing import Any
 
 from maxo import Bot
-from maxo.webhook.adapters.base_adapter import BoundRequest
-from maxo.webhook.security.base_check import SecurityCheck
-from maxo.webhook.security.secret_token import SecretToken
+from maxo.transport.webhook.adapters.base_adapter import BoundRequest
+from maxo.transport.webhook.security.base_check import SecurityCheck
+from maxo.transport.webhook.security.secret_token import SecretToken
 
 
 class Security:

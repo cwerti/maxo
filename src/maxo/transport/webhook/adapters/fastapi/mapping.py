@@ -2,7 +2,7 @@ from typing import Any
 
 from starlette.datastructures import Headers, QueryParams
 
-from maxo.webhook.adapters.base_mapping import MappingABC
+from maxo.transport.webhook.adapters.base_mapping import MappingABC
 
 
 class FastApiHeadersMapping(MappingABC[Headers]):

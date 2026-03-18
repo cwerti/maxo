@@ -10,7 +10,7 @@ from maxo.routing.signals import (
     BeforeShutdown,
     BeforeStartup,
 )
-from maxo.webhook.engines.simple import SimpleEngine
+from maxo.transport.webhook.engines.simple import SimpleEngine
 
 
 class TestSimpleEngine:

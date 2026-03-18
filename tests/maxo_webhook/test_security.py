@@ -1,10 +1,10 @@
 import pytest
 
-from maxo.webhook.security.secret_token import (
+from maxo.transport.webhook.security.secret_token import (
     SECRET_HEADER,
     StaticSecretToken,
 )
-from maxo.webhook.security.security import Security
+from maxo.transport.webhook.security.security import Security
 
 from .fixtures import DummyBoundRequest, DummyRequest, FailingCheck, PassingCheck
 

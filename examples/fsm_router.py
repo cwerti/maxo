@@ -9,8 +9,8 @@ from maxo.fsm import FSMContext, State, StateFilter, StatesGroup
 from maxo.integrations.magic_filter import MagicFilter
 from maxo.routing.filters import CommandStart
 from maxo.routing.updates import MessageCreated
+from maxo.transport.long_polling import LongPolling
 from maxo.utils.facades import MessageCreatedFacade
-from maxo.utils.long_polling import LongPolling
 
 router = Router(__name__)
 

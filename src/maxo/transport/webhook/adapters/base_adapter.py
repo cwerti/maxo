@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING, Any, Generic, TypeVar
 if TYPE_CHECKING:
     from collections.abc import Awaitable, Callable
 
-    from maxo.webhook.adapters.base_mapping import MappingABC
+    from maxo.transport.webhook.adapters.base_mapping import MappingABC
 
 R = TypeVar("R")
 

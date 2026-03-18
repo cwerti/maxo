@@ -1,5 +1,5 @@
 from maxo import Bot
-from maxo.webhook.routing.base import BaseRouting
+from maxo.transport.webhook.routing.base import BaseRouting
 
 
 class StaticRouting(BaseRouting):

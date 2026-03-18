@@ -3,7 +3,10 @@ from unittest.mock import AsyncMock, MagicMock
 import pytest
 from aiohttp import web
 
-from maxo.webhook.adapters.aiohttp.adapter import AiohttpBoundRequest, AiohttpWebAdapter
+from maxo.transport.webhook.adapters.aiohttp.adapter import (
+    AiohttpBoundRequest,
+    AiohttpWebAdapter,
+)
 
 
 @pytest.fixture

@@ -1,7 +1,7 @@
 import pytest
 
-from maxo.webhook.security import Security, StaticSecretToken
-from maxo.webhook.security.secret_token import SECRET_HEADER
+from maxo.transport.webhook.security import Security, StaticSecretToken
+from maxo.transport.webhook.security.secret_token import SECRET_HEADER
 
 from .fixtures import DummyBoundRequest, DummyRequest
 

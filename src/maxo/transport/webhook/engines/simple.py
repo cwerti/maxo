@@ -7,10 +7,10 @@ from maxo.routing.signals import (
     BeforeShutdown,
     BeforeStartup,
 )
-from maxo.webhook.adapters.base_adapter import BoundRequest, WebAdapter
-from maxo.webhook.engines.base import WebhookEngine
-from maxo.webhook.routing.base import BaseRouting
-from maxo.webhook.security.security import Security
+from maxo.transport.webhook.adapters.base_adapter import BoundRequest, WebAdapter
+from maxo.transport.webhook.engines.base import WebhookEngine
+from maxo.transport.webhook.routing.base import BaseRouting
+from maxo.transport.webhook.security.security import Security
 
 
 class SimpleEngine(WebhookEngine):

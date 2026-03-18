@@ -4,8 +4,8 @@ from hmac import compare_digest
 from typing import Any
 
 from maxo import Bot
-from maxo.webhook.adapters.base_adapter import BoundRequest
-from maxo.webhook.security.base_check import SecurityCheck
+from maxo.transport.webhook.adapters.base_adapter import BoundRequest
+from maxo.transport.webhook.security.base_check import SecurityCheck
 
 SECRET_HEADER = "X-Max-Bot-Api-Secret"  # noqa: S105
 SECRET_TOKEN_PATTERN = re.compile(r"^[A-Za-z0-9-]{5,256}$")

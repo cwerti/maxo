@@ -21,8 +21,8 @@ from maxo.fsm import State, StatesGroup
 from maxo.fsm.key_builder import DefaultKeyBuilder
 from maxo.routing.filters import CommandStart
 from maxo.routing.updates import MessageCallback, MessageCreated
+from maxo.transport.long_polling import LongPolling
 from maxo.utils.facades import MessageCallbackFacade, MessageCreatedFacade
-from maxo.utils.long_polling import LongPolling
 
 BASE_DIR = Path(__file__).resolve().parent
 

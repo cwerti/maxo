@@ -1,6 +1,6 @@
 from typing import Any
 
-from maxo.webhook.adapters.base_adapter import BoundRequest, WebAdapter
+from maxo.transport.webhook.adapters.base_adapter import BoundRequest, WebAdapter
 
 
 class DummyAdapter(WebAdapter):

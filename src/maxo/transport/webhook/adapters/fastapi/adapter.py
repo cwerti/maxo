@@ -5,9 +5,9 @@ from typing import Any
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 
-from maxo.webhook.adapters.base_adapter import BoundRequest, WebAdapter
-from maxo.webhook.adapters.base_mapping import MappingABC
-from maxo.webhook.adapters.fastapi.mapping import (
+from maxo.transport.webhook.adapters.base_adapter import BoundRequest, WebAdapter
+from maxo.transport.webhook.adapters.base_mapping import MappingABC
+from maxo.transport.webhook.adapters.fastapi.mapping import (
     FastApiHeadersMapping,
     FastApiQueryMapping,
 )

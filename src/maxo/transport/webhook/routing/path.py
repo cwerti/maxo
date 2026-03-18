@@ -1,8 +1,8 @@
 from typing import Any
 
 from maxo import Bot
-from maxo.webhook.adapters.base_adapter import BoundRequest
-from maxo.webhook.routing.base import TokenRouting
+from maxo.transport.webhook.adapters.base_adapter import BoundRequest
+from maxo.transport.webhook.routing.base import TokenRouting
 
 
 class PathRouting(TokenRouting):

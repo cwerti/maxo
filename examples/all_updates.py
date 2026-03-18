@@ -19,6 +19,7 @@ from maxo.routing.updates import (
     UserAddedToChat,
     UserRemovedFromChat,
 )
+from maxo.transport.long_polling import LongPolling
 from maxo.utils.facades import (
     BotAddedToChatFacade,
     BotRemovedFromChatFacade,
@@ -36,7 +37,6 @@ from maxo.utils.facades import (
     UserAddedToChatFacade,
     UserRemovedFromChatFacade,
 )
-from maxo.utils.long_polling import LongPolling
 
 logger = logging.getLogger(__name__)
 

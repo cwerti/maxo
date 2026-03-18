@@ -10,7 +10,7 @@ import os
 from handlers import echo_router, start_router
 
 from maxo import Bot, Dispatcher
-from maxo.utils.long_polling import LongPolling
+from maxo.transport.long_polling import LongPolling
 
 
 def main() -> None:
