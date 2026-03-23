@@ -37,11 +37,12 @@ class BgManager(BaseDialogManager):
         intent_id: str | None,
         stack_id: str | None,
         load: bool = False,
+        chat_type: ChatType = ChatType.CHAT,
     ) -> None:
         self._event_context = EventContext(
             chat_id=chat_id,
             user_id=user.id,
-            chat_type=ChatType.CHAT,  # TODO: Узнать тип чата
+            chat_type=chat_type,
             user=user,
             chat=None,
             bot=bot,
@@ -76,7 +77,7 @@ class BgManager(BaseDialogManager):
             user=user,
             chat_id=chat_id,
             user_id=user_id,
-            chat_type=ChatType.CHAT,  # TODO: Узнать тип чата
+            chat_type=self._event_context.chat_type,
             chat=None,
         )
         if stack_id is None:
@@ -97,6 +98,7 @@ class BgManager(BaseDialogManager):
             intent_id=intent_id,
             stack_id=stack_id,
             load=load,
+            chat_type=new_event_context.chat_type,
         )
 
     def _base_event_params(self) -> dict[str, Any]:
@@ -211,6 +213,7 @@ class BgManagerFactoryImpl(BgManagerFactory):
         chat_id: int,
         stack_id: str | None = None,
         load: bool = False,
+        chat_type: ChatType = ChatType.CHAT,
     ) -> "BaseDialogManager":
         user = FakeUser(
             user_id=user_id,
@@ -229,4 +232,5 @@ class BgManagerFactoryImpl(BgManagerFactory):
             intent_id=None,
             stack_id=stack_id,
             load=load,
+            chat_type=chat_type,
         )
