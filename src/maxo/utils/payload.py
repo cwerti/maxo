@@ -1,20 +1,17 @@
 from base64 import urlsafe_b64decode, urlsafe_b64encode
 from collections.abc import Callable
-from typing import Protocol
 
 
-class SupportsStr(Protocol):
-    def __str__(self) -> str: ...
+PayloadScalar = str | int | float | bool
 
 
 def encode_payload(
-    payload: str | SupportsStr,
+    payload: PayloadScalar,
     encoder: Callable[[bytes], bytes] | None = None,
 ) -> str:
-    if not isinstance(payload, str):
-        payload = str(payload)
+    payload_str = payload if isinstance(payload, str) else str(payload)
 
-    payload_bytes = payload.encode("utf-8")
+    payload_bytes = payload_str.encode("utf-8")
     if encoder is not None:
         payload_bytes = encoder(payload_bytes)
 
