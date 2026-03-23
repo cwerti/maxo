@@ -24,6 +24,8 @@ class InlineButtonTextLocator:
             return None
         for row in message.body.keyboard.buttons:
             for button in row:
+                if not isinstance(button, CallbackButton):
+                    continue
                 if self.regex.fullmatch(button.text):
                     return button
         return None
@@ -44,7 +46,8 @@ class InlineButtonPositionLocator:
         if not message.body.keyboard:
             return None
         try:
-            return message.body.keyboard.buttons[self.row][self.column]
+            button = message.body.keyboard.buttons[self.row][self.column]
+            return button if isinstance(button, CallbackButton) else None
         except IndexError:
             return None
 
@@ -64,7 +67,7 @@ class InlineButtonDataLocator:
             return None
         for row in message.body.keyboard.buttons:
             for button in row:
-                if not hasattr(button, "payload"):
+                if not isinstance(button, CallbackButton):
                     continue
                 if self.regex.fullmatch(button.payload):
                     return button
