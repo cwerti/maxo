@@ -287,13 +287,13 @@ async def create_button(
     if not simulate_events:
         return RenderButton(title=title, state=state.state)
     callback = Callback(
-        id="1",
-        from_user=User(
+        callback_id="1",
+        user=User(
             user_id=1, is_bot=False, first_name="",
             last_activity_time=datetime(2024, 1, 1, tzinfo=UTC),
         ),
-        chat_instance="",
-        data=callback,
+        timestamp=datetime(2024, 1, 1, tzinfo=UTC),
+        payload=callback,
     )
     manager.set_state(state)
     try:
