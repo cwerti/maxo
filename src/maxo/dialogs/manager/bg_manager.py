@@ -21,7 +21,6 @@ from maxo.dialogs.manager.updater import Updater
 from maxo.dialogs.utils import is_user_loaded
 from maxo.enums import ChatType
 from maxo.fsm import State
-from maxo.routing.interfaces import BaseRouter
 from maxo.types import Recipient, User
 
 logger = logging.getLogger(__name__)
@@ -203,8 +202,8 @@ class BgManager(BaseDialogManager):
 
 
 class BgManagerFactoryImpl(BgManagerFactory):
-    def __init__(self, router: BaseRouter) -> None:
-        self._router = router
+    def __init__(self, router: Dispatcher) -> None:
+        self._dp = router
 
     def bg(
         self,
@@ -228,7 +227,7 @@ class BgManagerFactoryImpl(BgManagerFactory):
             user=user,
             chat_id=chat_id,
             bot=bot,
-            dp=self._router,
+            dp=self._dp,
             intent_id=None,
             stack_id=stack_id,
             load=load,
