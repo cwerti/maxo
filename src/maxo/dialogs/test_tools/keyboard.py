@@ -1,7 +1,7 @@
 import re
 from typing import Protocol
 
-from maxo.types import CallbackButton, InlineButtons, Message, MessageButton
+from maxo.types import CallbackButton, InlineButtons, Message
 
 
 class InlineButtonLocator(Protocol):
@@ -24,7 +24,7 @@ class InlineButtonTextLocator:
             return None
         for row in message.body.keyboard.buttons:
             for button in row:
-                if not isinstance(button, (CallbackButton, MessageButton)):
+                if not hasattr(button, "text"):
                     continue
                 if self.regex.fullmatch(button.text):
                     return button

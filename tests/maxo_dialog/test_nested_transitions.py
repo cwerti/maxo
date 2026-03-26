@@ -1,6 +1,6 @@
 """Тест каскадных переходов между вложенными диалогами.
 
-Проверяет, что цепочка Main→Secondary→Third корректно запускается через
+Проверяет, что цепочка Main->Secondary->Third корректно запускается через
 on_start колбэки, а Cancel во внутреннем диалоге каскадно возвращает
 управление к корневому диалогу.
 """
@@ -26,7 +26,6 @@ from maxo.fsm.state import State, StatesGroup
 from maxo.routing.filters import CommandStart
 from maxo.routing.signals import AfterStartup, BeforeStartup
 from maxo.routing.updates import MessageCreated
-
 
 
 class MainSG(StatesGroup):
@@ -116,14 +115,36 @@ async def test_start(
 
     # start
     await client.send("/start")
+    first_message = message_manager.one_message()
+    assert first_message.body.text == "Third"
+    assert first_message.body.reply_markup
+
+    message_manager.reset_history()
+    await client.click(first_message, InlineButtonTextLocator("Cancel"))
+    second_message = message_manager.one_message()
+    assert second_message.body.text == "First"
+    assert second_message.body.reply_markup is None
+
+
+@pytest.mark.asyncio
+async def test_cascade_cancel(
+    dp: Dispatcher,
+    message_manager: MockMessageManager,
+    client: BotClient,
+) -> None:
+    """Cancel во внутреннем диалоге каскадно закрывает весь стек."""
+    await dp.feed_signal(BeforeStartup(), client.bot)
+    await dp.feed_signal(AfterStartup(), client.bot)
+
+    await client.send("/start")
     startup_messages = list(message_manager.sent_messages)
     first_message = startup_messages[-1]
     assert first_message.body.text == "Third"
     assert first_message.body.reply_markup
 
-    # Cascade-start emits one message per dialog (Main→Secondary→Third).
-    # We iterate in reverse to find the innermost message that responds to Cancel,
-    # because only the active (innermost) dialog processes the callback.
+    # Каскадный старт создает по сообщению на каждый диалог (Main->Secondary->Third).
+    # Ищем в обратном порядке самое внутреннее сообщение, которое реагирует на Cancel,
+    # т.к. только активный (внутренний) диалог обрабатывает callback.
     second_message = None
     for candidate in reversed(startup_messages):
         message_manager.reset_history()
