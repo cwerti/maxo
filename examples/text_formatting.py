@@ -9,6 +9,8 @@ from maxo.transport.long_polling import LongPolling
 from maxo.utils.facades import MessageCreatedFacade
 from maxo.utils.formatting import (
     Bold,
+    Heading,
+    Highlighted,
     Italic,
     Link,
     Mention,
@@ -28,7 +30,7 @@ dp = Dispatcher()
 @dp.message_created(Command("start"))
 async def start_handler(update: MessageCreated, facade: MessageCreatedFacade) -> None:
     text = Text(
-        "Привет, это демонстрация возможностей форматирования текста.",
+        Heading("Привет, это демонстрация возможностей форматирования текста."),
         "\n\n",
         Bold("Это жирный текст."),
         "\n",
@@ -47,6 +49,8 @@ async def start_handler(update: MessageCreated, facade: MessageCreatedFacade) ->
             update.message.unsafe_sender.fullname,
             user_id=update.message.unsafe_sender.id,
         ),
+        "\n",
+        Highlighted("Это выделенный текст"),
         "\n\n",
         "Вы также можете использовать вспомогательные функции для создания списков:",
         "\n\n",

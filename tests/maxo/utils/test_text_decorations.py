@@ -3,6 +3,8 @@ import pytest
 from maxo.enums import MarkupElementType
 from maxo.types import (
     EmphasizedMarkup,
+    HeadingMarkup,
+    HighlightedMarkup,
     LinkMarkup,
     MarkupElement,
     MarkupElements,
@@ -62,6 +64,26 @@ class TestTextDecoration:
                 markdown_decoration,
                 MarkupElement(type=MarkupElementType.QUOTE, from_=0, length=4),
                 "> test",
+            ),
+            (
+                html_decoration,
+                HeadingMarkup(from_=0, length=4),
+                "<h1>test</h1>",
+            ),
+            (
+                markdown_decoration,
+                HeadingMarkup(from_=0, length=4),
+                "# test",
+            ),
+            (
+                html_decoration,
+                HighlightedMarkup(from_=0, length=4),
+                "<mark>test</mark>",
+            ),
+            (
+                markdown_decoration,
+                HighlightedMarkup(from_=0, length=4),
+                "^^test^^",
             ),
         ],
     )

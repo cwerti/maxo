@@ -47,6 +47,8 @@ from maxo.types import (
     EmphasizedMarkup,
     FileAttachment,
     FileAttachmentRequest,
+    HeadingMarkup,
+    HighlightedMarkup,
     InlineKeyboardAttachment,
     InlineKeyboardAttachmentRequest,
     LinkButton,
@@ -108,6 +110,8 @@ TAG_PROVIDERS = concat_provider(
     has_tag_provider(StrongMarkup, "type", MarkupElementType.STRONG),
     has_tag_provider(UnderlineMarkup, "type", MarkupElementType.UNDERLINE),
     has_tag_provider(UserMentionMarkup, "type", MarkupElementType.USER_MENTION),
+    has_tag_provider(HeadingMarkup, "type", MarkupElementType.HEADING),
+    has_tag_provider(HighlightedMarkup, "type", MarkupElementType.HIGHLIGHTED),
     # ---> AttachmentRequestType <---
     has_tag_provider(PhotoAttachmentRequest, "type", AttachmentRequestType.IMAGE),
     has_tag_provider(VideoAttachmentRequest, "type", AttachmentRequestType.VIDEO),

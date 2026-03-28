@@ -267,6 +267,14 @@ class Mention(Text):
         super().__init__(*body, user_id=user_id, **params)
 
 
+class Heading(Text):
+    type = MarkupElementType.HEADING
+
+
+class Highlighted(Text):
+    type = MarkupElementType.HIGHLIGHTED
+
+
 NODE_TYPES: dict[str | None, type[Text]] = {
     Text.type: Text,
     BlockQuote.type: BlockQuote,
@@ -276,7 +284,8 @@ NODE_TYPES: dict[str | None, type[Text]] = {
     Strikethrough.type: Strikethrough,
     Link.type: Link,
     Mention.type: Mention,
-    Monospaced.type: Monospaced,
+    Heading.type: Heading,
+    Highlighted.type: Highlighted,
 }
 
 

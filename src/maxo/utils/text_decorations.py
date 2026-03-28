@@ -40,6 +40,8 @@ class TextDecoration(ABC):
             MarkupElementType.STRIKETHROUGH,
             MarkupElementType.STRONG,
             MarkupElementType.UNDERLINE,
+            MarkupElementType.HEADING,
+            MarkupElementType.HIGHLIGHTED,
         }:
             return cast(str, getattr(self, entity.type)(value=text))
 
@@ -134,6 +136,14 @@ class TextDecoration(ABC):
         pass
 
     @abstractmethod
+    def heading(self, value: str) -> str:
+        pass
+
+    @abstractmethod
+    def highlighted(self, value: str) -> str:
+        pass
+
+    @abstractmethod
     def quote(self, value: str) -> str:
         pass
 
@@ -145,6 +155,8 @@ class HtmlDecoration(TextDecoration):
     STRIKETHROUGH_TAG = "s"
     MONOSPACED_TAG = "pre"
     BLOCKQUOTE_TAG = "blockquote"
+    HEADING_TAG = "h1"
+    HIGHLIGHTED_TAG = "mark"
 
     def blockquote(self, value: str) -> str:
         return f"<{self.BLOCKQUOTE_TAG}>{value}</{self.BLOCKQUOTE_TAG}>"
@@ -166,6 +178,12 @@ class HtmlDecoration(TextDecoration):
 
     def underline(self, value: str) -> str:
         return f"<{self.UNDERLINE_TAG}>{value}</{self.UNDERLINE_TAG}>"
+
+    def heading(self, value: str) -> str:
+        return f"<{self.HEADING_TAG}>{value}</{self.HEADING_TAG}>"
+
+    def highlighted(self, value: str) -> str:
+        return f"<{self.HIGHLIGHTED_TAG}>{value}</{self.HIGHLIGHTED_TAG}>"
 
     def quote(self, value: str) -> str:
         return html.escape(value, quote=False)
@@ -194,6 +212,12 @@ class MarkdownDecoration(TextDecoration):
 
     def underline(self, value: str) -> str:
         return f"++{value}++"
+
+    def heading(self, value: str) -> str:
+        return f"# {value}"
+
+    def highlighted(self, value: str) -> str:
+        return f"^^{value}^^"
 
     def quote(self, value: str) -> str:
         return re.sub(pattern=self.MARKDOWN_QUOTE_PATTERN, repl=r"\\\1", string=value)
