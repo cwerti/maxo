@@ -140,6 +140,20 @@ class LongPolling:
                 )
                 if is_defined(marker):
                     marker += 1
+                    continue
+
+                failed = True
+                backoff.next()
+                loggers.dispatcher.warning(
+                    "Первый запрос на получение обновлений не удался. "
+                    "Sleep for %f seconds and try again... "
+                    "(tryings = %d, username = @%s, bot id = %d)",
+                    backoff.current_delay,
+                    backoff.counter,
+                    bot_username,
+                    bot_id,
+                )
+                await backoff.sleep()
                 continue
             except Exception as exception:  # noqa: BLE001
                 failed = True

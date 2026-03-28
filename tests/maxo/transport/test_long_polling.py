@@ -122,12 +122,14 @@ async def test_handles_load_error_and_skips_update(
 
 
 @pytest.mark.asyncio
-@pytest.mark.skip("Вечный цикл насмерть из-за marker=Omitted()")
 async def test_handles_load_error_with_no_marker(
     long_polling: LongPolling,
     mock_bot: Bot,
 ) -> None:
-    mock_bot.state.api_client.call_method.side_effect = LoadError("Test LoadError")
+    mock_bot.state.api_client.call_method.side_effect = [
+        LoadError("Test LoadError"),
+        CancelledError,
+    ]
 
     with (
         patch("maxo.transport.long_polling.loggers.dispatcher") as mock_logger,
@@ -139,13 +141,14 @@ async def test_handles_load_error_with_no_marker(
     ):
         updates_generator = long_polling._get_updates(bot=mock_bot, marker=None)
 
-        await run_generator_once(updates_generator)
+        with pytest.raises(CancelledError):
+            await updates_generator.__anext__()
 
         mock_logger.exception.assert_called_once_with(
             "Ошибка загрузки апдейта в модель. "
             "Сообщите об этой ошибке в https://github.com/K1rL3s/maxo/issues",
         )
-        mock_bot.state.api_client.call_method.assert_called_once()
+        assert mock_bot.state.api_client.call_method.call_count == 2
         mock_backoff_next.assert_called_once()
         mock_backoff_sleep.assert_called_once()
 
