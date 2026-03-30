@@ -145,6 +145,8 @@ Contributors
    pages/dialogs/transitions
    pages/dialogs/data_and_context
    pages/dialogs/background_manager
+   pages/dialogs/testing
+   pages/dialogs/preview
 
 .. toctree::
    :maxdepth: 2
