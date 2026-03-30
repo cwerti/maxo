@@ -9,6 +9,8 @@ from maxo.types.user_mention_markup import UserMentionMarkup
 from maxo.utils.formatting import (
     BlockQuote,
     Bold,
+    Heading,
+    Highlighted,
     Italic,
     Link,
     Mention,
@@ -69,6 +71,14 @@ class TestNode:
             (
                 BlockQuote("test"),
                 "<blockquote>test</blockquote>",
+            ),
+            (
+                Heading("test"),
+                "<h1>test</h1>",
+            ),
+            (
+                Highlighted("test"),
+                "<mark>test</mark>",
             ),
         ],
     )

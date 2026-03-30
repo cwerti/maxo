@@ -1,10 +1,16 @@
+from adaptix.load_error import LoadError
+from unihttp.http import HTTPResponse
+from unihttp.serialize import ResponseLoader
+
+from maxo import loggers
 from maxo.bot.methods.base import MaxoMethod
 from maxo.bot.methods.markers import Query
 from maxo.omit import Omittable, Omitted
+from maxo.routing.updates.updates import Updates
 from maxo.types.update_list import UpdateList
 
 
-class GetUpdates(MaxoMethod[UpdateList]):
+class GetUpdates(MaxoMethod[UpdateList], slots=False):
     """
     Получение обновлений
 
@@ -40,3 +46,26 @@ class GetUpdates(MaxoMethod[UpdateList]):
     """Тайм-аут в секундах для долгого опроса"""
     types: Query[Omittable[list[str] | None]] = Omitted()
     """Список типов обновлений, которые бот хочет получить (например, `message_created`, `message_callback`)"""
+
+    def make_response(
+        self,
+        response: HTTPResponse,
+        response_loader: ResponseLoader,
+    ) -> UpdateList:
+        try:
+            return super().make_response(response, response_loader)
+        except LoadError:
+            raw = response.data
+            marker = raw.get("marker")
+            updates = []
+            for raw_upd in raw.get("updates", []):
+                try:
+                    updates.append(response_loader.load(raw_upd, Updates))
+                except LoadError:
+                    loggers.methods.warning(
+                        "Пропуск незагружаемого апдейта. Сообщите об этой ошибке в "
+                        "https://github.com/K1rL3s/maxo/issues. Тело апдейта: %s",
+                        raw_upd,
+                        exc_info=True,
+                    )
+            return UpdateList(updates=updates, marker=marker)

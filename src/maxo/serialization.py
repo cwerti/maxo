@@ -47,6 +47,8 @@ from maxo.types import (
     EmphasizedMarkup,
     FileAttachment,
     FileAttachmentRequest,
+    HeadingMarkup,
+    HighlightedMarkup,
     InlineKeyboardAttachment,
     InlineKeyboardAttachmentRequest,
     LinkButton,
@@ -108,6 +110,8 @@ TAG_PROVIDERS = concat_provider(
     has_tag_provider(StrongMarkup, "type", MarkupElementType.STRONG),
     has_tag_provider(UnderlineMarkup, "type", MarkupElementType.UNDERLINE),
     has_tag_provider(UserMentionMarkup, "type", MarkupElementType.USER_MENTION),
+    has_tag_provider(HeadingMarkup, "type", MarkupElementType.HEADING),
+    has_tag_provider(HighlightedMarkup, "type", MarkupElementType.HIGHLIGHTED),
     # ---> AttachmentRequestType <---
     has_tag_provider(PhotoAttachmentRequest, "type", AttachmentRequestType.IMAGE),
     has_tag_provider(VideoAttachmentRequest, "type", AttachmentRequestType.VIDEO),
@@ -154,6 +158,14 @@ def create_retort(
             )
         return method
 
+    def _load_datetime(time: int) -> datetime:
+        try:
+            return datetime.fromtimestamp(time / 1000, tz=UTC)
+        except (OSError, OverflowError, ValueError):
+            if time > 0:
+                return datetime.max.replace(tzinfo=UTC)
+            return datetime.min.replace(tzinfo=UTC)
+
     retort = DEFAULT_RETORT.extend(
         recipe=[
             TAG_PROVIDERS,
@@ -179,7 +191,7 @@ def create_retort(
                 lambda x: x.to_request() if isinstance(x, Attachments) else x,
                 chain=Chain.FIRST,
             ),
-            loader(P[datetime], lambda x: datetime.fromtimestamp(x / 1000, tz=UTC)),
+            loader(P[datetime], _load_datetime),
         ],
     )
     if warming_up:

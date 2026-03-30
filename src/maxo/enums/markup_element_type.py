@@ -7,8 +7,10 @@ class MarkupElementType(StrEnum):
     EMPHASIZED = "emphasized"
     LINK = "link"
     MONOSPACED = "monospaced"
-    QUOTE = "quote"  # Самодельное поле
     STRIKETHROUGH = "strikethrough"
     STRONG = "strong"
     UNDERLINE = "underline"
     USER_MENTION = "user_mention"
+    QUOTE = "quote"  # Нет в доке, работает
+    HEADING = "heading"  # Нет в доке, работает
+    HIGHLIGHTED = "highlighted"  # Нет в доке, работает

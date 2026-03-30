@@ -3,6 +3,8 @@ import pytest
 from maxo.enums import MarkupElementType
 from maxo.types import (
     EmphasizedMarkup,
+    HeadingMarkup,
+    HighlightedMarkup,
     LinkMarkup,
     MarkupElement,
     MarkupElements,
@@ -63,6 +65,26 @@ class TestTextDecoration:
                 MarkupElement(type=MarkupElementType.QUOTE, from_=0, length=4),
                 "> test",
             ),
+            (
+                html_decoration,
+                HeadingMarkup(from_=0, length=4),
+                "<h1>test</h1>",
+            ),
+            (
+                markdown_decoration,
+                HeadingMarkup(from_=0, length=4),
+                "# test",
+            ),
+            (
+                html_decoration,
+                HighlightedMarkup(from_=0, length=4),
+                "<mark>test</mark>",
+            ),
+            (
+                markdown_decoration,
+                HighlightedMarkup(from_=0, length=4),
+                "^^test^^",
+            ),
         ],
     )
     def test_apply_single_entity(
@@ -95,6 +117,7 @@ class TestTextDecoration:
             (markdown_decoration, "test ` test", "test \\` test"),
             (markdown_decoration, "test * test", "test \\* test"),
             (markdown_decoration, "test _ test", "test \\_ test"),
+            (markdown_decoration, "x^2 + y^2", "x\\^2 \\+ y\\^2"),
         ],
     )
     def test_quote(self, decorator: TextDecoration, before: str, after: str) -> None:
