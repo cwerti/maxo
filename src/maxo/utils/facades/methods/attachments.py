@@ -64,7 +64,7 @@ class AttachmentsFacade(BotMethodsFacade):
                 attachments[i] = file
 
         if files_to_upload:
-            uploaded_files = await self._upload_files(files_to_upload)
+            uploaded_files = await self.build_media_attachments(files_to_upload)
             for i, uploaded_file in zip(file_indices, uploaded_files, strict=True):
                 attachments[i] = uploaded_file
 
@@ -74,9 +74,9 @@ class AttachmentsFacade(BotMethodsFacade):
             # 'Key: errors.process.attachment.file.not.processed')
             await asyncio.sleep(0.5)
 
-        return [attachment for attachment in attachments if attachment]
+        return [attachment for attachment in attachments if attachment is not None]
 
-    async def _upload_files(
+    async def build_media_attachments(
         self,
         files: Sequence[InputFile],
     ) -> Sequence[MediaAttachmentsRequests]:
