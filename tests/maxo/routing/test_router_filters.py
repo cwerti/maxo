@@ -8,7 +8,7 @@ from maxo.routing.ctx import Ctx
 from maxo.routing.dispatcher import Dispatcher
 from maxo.routing.filters import BaseFilter
 from maxo.routing.routers.simple import Router
-from maxo.routing.sentinels import SkipHandler, UNHANDLED
+from maxo.routing.sentinels import UNHANDLED, SkipHandler
 from maxo.routing.signals import BeforeStartup
 from maxo.routing.updates.message_created import MessageCreated
 from maxo.types import Message, MessageBody, Recipient, User

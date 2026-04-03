@@ -34,7 +34,7 @@ class MessageMethodsFacade(AttachmentsFacade, ABC):
         text: str | None = None,
         link: NewMessageLink | None = None,
         notify: Omittable[bool] = True,
-        format: TextFormat | None = None,
+        format: Omittable[TextFormat | None] = Omitted(),
         disable_link_preview: Omittable[bool] = Omitted(),
         keyboard: Sequence[Sequence[InlineButtons]] | None = None,
         media: Sequence[MediaInput] | None = None,
@@ -69,7 +69,7 @@ class MessageMethodsFacade(AttachmentsFacade, ABC):
         text: str,
         keyboard: Sequence[Sequence[InlineButtons]] | None = None,
         notify: Omittable[bool] = True,
-        format: TextFormat | None = None,
+        format: Omittable[TextFormat | None] = Omitted(),
         disable_link_preview: Omittable[bool] = Omitted(),
     ) -> Message:
         return await self.send_message(
@@ -85,7 +85,7 @@ class MessageMethodsFacade(AttachmentsFacade, ABC):
         text: str,
         keyboard: Sequence[Sequence[InlineButtons]] | None = None,
         notify: Omittable[bool] = True,
-        format: TextFormat | None = None,
+        format: Omittable[TextFormat | None] = Omitted(),
         disable_link_preview: Omittable[bool] = Omitted(),
     ) -> Message:
         return await self.send_message(
@@ -103,7 +103,7 @@ class MessageMethodsFacade(AttachmentsFacade, ABC):
         text: str | None = None,
         keyboard: Sequence[Sequence[InlineButtons]] | None = None,
         notify: Omittable[bool] = True,
-        format: TextFormat | None = None,
+        format: Omittable[TextFormat | None] = Omitted(),
         link: NewMessageLink | None = None,
         disable_link_preview: Omittable[bool] = Omitted(),
     ) -> Message:
@@ -127,7 +127,7 @@ class MessageMethodsFacade(AttachmentsFacade, ABC):
         media: Sequence[MediaInput] | None = None,
         link: NewMessageLink | None = None,
         notify: bool = True,
-        format: TextFormat | None = None,
+        format: Omittable[TextFormat | None] = Omitted(),
     ) -> Message:
         message_id = self.message.body.mid
 

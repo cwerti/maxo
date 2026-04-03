@@ -4,6 +4,7 @@ import pytest
 
 from maxo import Router
 from maxo.enums import ChatType
+from maxo.routing.ctx import Ctx
 from maxo.routing.dispatcher import Dispatcher
 from maxo.routing.filters import BaseFilter
 from maxo.routing.middlewares.state import (
@@ -18,7 +19,6 @@ from maxo.routing.signals import (
     BeforeStartup,
     MaxoUpdate,
 )
-from maxo.routing.ctx import Ctx
 from maxo.routing.updates.message_created import MessageCreated
 from maxo.types import Message, MessageBody, Recipient, User
 
