@@ -88,7 +88,12 @@ def setup_dishka(
 
     if auto_inject:
 
-        async def _auto_inject() -> None:
+        async def _auto_inject(ctx: Ctx) -> None:
+            # При вызове из Dispatcher._emit_before_startup_handler
+            # ещё не успел сработать DishkaMiddleware,
+            # но дишка уже инжектировалась в сигналы.
+            # Поэтому надо положить контейнер в ctx
+            ctx[CONTAINER_NAME] = container
             inject_router(dispatcher)
 
         dispatcher.before_startup.handler(_auto_inject)
