@@ -1,4 +1,5 @@
 import asyncio
+from asyncio import Task
 from contextvars import copy_context
 
 from maxo import Bot, Dispatcher
@@ -13,12 +14,15 @@ class Updater:
         self.dp = dp
 
     async def notify(self, update: DialogUpdateEvent, bot: Bot) -> None:
-        def callback() -> None:
-            asyncio.create_task(  # noqa: RUF006
-                self._process_update(update, bot),
-            )
+        asyncio.get_running_loop().call_soon(
+            self.notify_task,
+            bot,
+            update,
+            context=copy_context(),
+        )
 
-        asyncio.get_running_loop().call_soon(callback, context=copy_context())
+    def notify_task(self, bot: Bot, update: DialogUpdateEvent) -> Task:
+        return asyncio.create_task(self._process_update(update, bot))
 
     async def _process_update(self, update: DialogUpdateEvent, bot: Bot) -> None:
         await self.dp.feed_update(MaxoUpdate(update=update), bot)

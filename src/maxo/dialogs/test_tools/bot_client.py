@@ -1,6 +1,7 @@
 import uuid
 from datetime import UTC, datetime
 from typing import Any
+from unittest.mock import AsyncMock
 
 from maxo import Bot, Dispatcher
 from maxo.bot.state import RunningBotState
@@ -38,9 +39,9 @@ class FakeBot(Bot):
             is_bot=True,
             last_activity_time=datetime.fromtimestamp(1234567890, tz=UTC),
         )
-        self._state = RunningBotState(info=info, api_client=None)
+        self._state = RunningBotState(info=info, api_client=AsyncMock())
 
-    def answer_on_callback(self, *_: Any, **__: Any) -> None:
+    async def answer_on_callback(self, *_: Any, **__: Any) -> None:
         pass
 
     def __hash__(self) -> int:
