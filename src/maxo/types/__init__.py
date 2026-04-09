@@ -14,7 +14,6 @@ from .bot_command import BotCommand
 from .bot_info import BotInfo
 from .button import Button
 from .buttons import InlineButtons
-from .clipboard_button import ClipboardButton
 from .callback import Callback
 from .callback_button import CallbackButton
 from .chat import Chat
@@ -24,6 +23,7 @@ from .chat_button import ChatButton
 from .chat_list import ChatList
 from .chat_member import ChatMember
 from .chat_members_list import ChatMembersList
+from .clipboard_button import ClipboardButton
 from .contact_attachment import ContactAttachment
 from .contact_attachment_payload import ContactAttachmentPayload
 from .contact_attachment_request import ContactAttachmentRequest
@@ -97,7 +97,6 @@ from .video_thumbnail import VideoThumbnail
 from .video_urls import VideoUrls
 
 __all__ = (
-    "ClipboardButton",
     "Attachment",
     "AttachmentPayload",
     "AttachmentRequest",
@@ -117,6 +116,7 @@ __all__ = (
     "ChatList",
     "ChatMember",
     "ChatMembersList",
+    "ClipboardButton",
     "ContactAttachment",
     "ContactAttachmentPayload",
     "ContactAttachmentRequest",

@@ -22,16 +22,16 @@ async def start_handler(
     ctx: Ctx,
     facade: MessageCreatedFacade,
 ) -> None:
+    maxo_url = "https://github.com/K1rL3s/maxo"
     keyboard = (
         KeyboardBuilder()
-        .add_callback(
-            text="Кликни на меня",
-            payload="click_me",
-        )
-        .add_link(text="Ссылка на google", url="https://google.com")
+        .add_callback(text="Колбэк", payload="click_me")
+        .add_message(text="Сообщение")
+        .add_link(text="Перейти в maxo", url=maxo_url)
+        .add_clipboard(text="Скопировать maxo", payload=maxo_url)
         .add_request_contact(text="Поделится контактами")
         .add_request_geo_location(text="Поделится гео позицией")
-        .adjust(3)
+        .adjust(2, 2, 1, 1)
     )
 
     await facade.answer_text(
