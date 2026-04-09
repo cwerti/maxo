@@ -3,6 +3,7 @@ from enum import StrEnum
 
 class ButtonType(StrEnum):
     CALLBACK = "callback"
+    CLIPBOARD = "clipboard"
     LINK = "link"
     MESSAGE = "message"
     OPEN_APP = "open_app"

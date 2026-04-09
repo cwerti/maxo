@@ -9,6 +9,7 @@ from itertools import chain, cycle
 from typing import ClassVar, Self, TypeVar
 
 from maxo.omit import Omittable, Omitted
+from maxo.types import ClipboardButton
 from maxo.types.buttons import InlineButtons
 from maxo.types.callback_button import CallbackButton
 from maxo.types.link_button import LinkButton
@@ -109,6 +110,10 @@ class KeyboardBuilder:
 
     def add_message(self, text: str) -> Self:
         self.add(MessageButton(text=text))
+        return self
+
+    def add_clipboard(self, text: str, payload: str) -> Self:
+        self.add(ClipboardButton(text=text, payload=payload))
         return self
 
     @property
