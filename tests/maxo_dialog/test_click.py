@@ -108,8 +108,8 @@ async def test_click() -> None:
     callback_id = await client.click(first_message, InlineButtonTextLocator("Button"))
 
     message_manager.assert_answered(callback_id)
-    usecase.assert_called()
+    usecase.assert_awaited()
     second_message = message_manager.one_message()
     assert second_message.body.text == "Next Username"
     assert second_message.body.reply_markup
-    user_getter.assert_called_once()
+    user_getter.assert_awaited_once()

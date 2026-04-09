@@ -159,7 +159,7 @@ class BotClient:
             )
 
         callback = self._new_callback(button)
-        await self.dp.feed_max_update(
+        await self.dp.feed_update(
             MaxoUpdate(
                 update=MessageCallback(
                     timestamp=datetime.fromtimestamp(1234567890, tz=UTC),
@@ -173,7 +173,7 @@ class BotClient:
         return callback.callback_id
 
     async def user_added_to_chat(self) -> Any:
-        return await self.dp.feed_max_update(
+        return await self.dp.feed_update(
             MaxoUpdate(
                 update=UserAddedToChat(
                     chat_id=self.chat.chat_id,
@@ -186,7 +186,7 @@ class BotClient:
         )
 
     async def bot_added_to_chat(self) -> Any:
-        return await self.dp.feed_max_update(
+        return await self.dp.feed_update(
             MaxoUpdate(
                 update=BotAddedToChat(
                     chat_id=self.chat.chat_id,
