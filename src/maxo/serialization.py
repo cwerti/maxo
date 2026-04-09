@@ -42,6 +42,7 @@ from maxo.types import (
     AudioAttachment,
     AudioAttachmentRequest,
     CallbackButton,
+    ClipboardButton,
     ContactAttachment,
     ContactAttachmentRequest,
     EmphasizedMarkup,
@@ -133,6 +134,7 @@ TAG_PROVIDERS = concat_provider(
     has_tag_provider(RequestGeoLocationButton, "type", ButtonType.REQUEST_GEO_LOCATION),
     has_tag_provider(OpenAppButton, "type", ButtonType.OPEN_APP),
     has_tag_provider(MessageButton, "type", ButtonType.MESSAGE),
+    has_tag_provider(ClipboardButton, "type", ButtonType.CLIPBOARD),
 )
 
 

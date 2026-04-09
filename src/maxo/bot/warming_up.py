@@ -54,6 +54,7 @@ from maxo.types import (
     ChatList,
     ChatMember,
     ChatMembersList,
+    ClipboardButton,
     ContactAttachment,
     ContactAttachmentPayload,
     ContactAttachmentRequest,
@@ -217,6 +218,7 @@ _types = (
     VideoAttachmentRequest,
     VideoThumbnail,
     VideoUrls,
+    ClipboardButton,
 )
 
 
